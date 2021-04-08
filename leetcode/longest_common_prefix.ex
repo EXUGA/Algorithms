@@ -24,11 +24,12 @@ defmodule Algorithms.Leetcode.LongestCommonPrefix do
     # [ "flower", "flow", "flight" ]
     # [ ["f"]["lower"], ["f"]["low"], ["f"]["light"] ]
     def algorithm(list, accumulator) do
-        [ head | rest ] = Enum.map(list, &(hd(&1)))
-        areAllEquals? = Enum.all?(rest, &(&1 == head))
+        [ hd_head | hd_rest ] = Enum.map(list, &(hd(&1)))
+        tl_list = Enum.map(list, &(tl(&1)))
+        areAllEquals? = Enum.all?(hd_rest, &(&1 == hd_head))
         case areAllEquals? do
             false -> accumulator
-            true -> algorithm()
+            true -> algorithm(tl_list, [hd_head | accumulator])
         end
     end
 
